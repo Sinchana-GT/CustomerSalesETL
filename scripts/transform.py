@@ -201,3 +201,116 @@ print(sales_v2[["price", "freight_value", "total_item_value"]].head())
 
 # Basic statistics for total item value
 print(sales_v2["total_item_value"].describe())
+
+# Load Products dataset for relationship validation
+products = datasets["products"]
+
+# Count unique products available in the sales dataset
+print("Sales_V2 Unique Products:",sales_v2["product_id"].nunique())
+
+# Count unique products available in the Products dataset
+print("\nProducts Dataset Unique Products:",products["product_id"].nunique())
+
+# Check for products present in Sales_V2 but missing in Products
+missing_products = sales_v2[~sales_v2["product_id"].isin(products["product_id"])]
+
+print("\nMissing Products:",missing_products.shape)
+
+# Merge Sales_V2 with Products using product_id.
+# This adds product category and product attributes to the sales dataset.
+
+sales_v3 = sales_v2.merge(products,
+    on="product_id",
+    how="inner"
+)
+
+print("\nSales V3 Shape:",sales_v3.shape)
+print("\nSales V3 Columns:",sales_v3.columns.tolist())
+
+
+# Load product category translation dataset
+product_category = datasets["product_category_name"]
+
+# Count unique product categories in Sales_V3
+print("\nSales_V3 Unique Categories:",sales_v3["product_category_name"].nunique())
+
+# Count unique categories in translation dataset
+print("\nTranslation Dataset Categories:",product_category["product_category_name"].nunique())
+
+# Find product categories that do not exist in the translation dataset
+missing_categories = sales_v3[~sales_v3["product_category_name"].isin(product_category["product_category_name"])]
+
+print("\nMissing Categories:",missing_categories["product_category_name"].drop_duplicates().tolist())
+
+print("\nNumber of Missing Categories:",missing_categories["product_category_name"].nunique())
+
+# Check how many sales records are affected by missing category translations
+
+print(sales_v3["product_category_name"].isin(product_category["product_category_name"]).value_counts())
+
+# Merge product category translations to get English category names
+# Use LEFT JOIN to retain all sales records.
+# Categories without translations will have null values
+# in product_category_name_english.
+
+sales_v4 = sales_v3.merge(
+    product_category,
+    on="product_category_name",
+    how="left"
+)
+
+print("\nSales V4 Shape:", sales_v4.shape)
+
+print("\nNull Category Translations:",sales_v4["product_category_name_english"].isnull().sum())
+
+
+#load sellers dataset for relationship validation
+
+sellers = datasets["sellers"]
+print("\nSalesV4 Unique Sellers:",sales_v4["seller_id"].nunique())
+print("\nSeller Dataset Unique Sellers:",sellers["seller_id"].nunique())
+
+# Merge seller information into the sales dataset.
+# This adds seller location details to each sales record.
+
+sales_v5 = sales_v4.merge(
+    sellers,
+    on="seller_id",
+    how="inner"
+)
+
+print("\nSales V5 Shape:", sales_v5.shape)
+print("\nSales V5 Columns:", sales_v5.columns.tolist())
+
+#load customers dataset for relationship validation
+
+customers = datasets["customers"]
+print("\nSalesV5 Unique customers:",sales_v5["customer_id"].nunique())
+print("\nCustomer Dataset Unique Customers:",customers["customer_id"].nunique())
+
+# Check whether every customer in Sales_V5 exists
+# in the Customers dataset
+
+missing_customers = sales_v5[~sales_v5["customer_id"].isin(customers["customer_id"])]
+
+print("\nMissing Customers:",missing_customers.shape)
+# Merge customer information into the sales dataset.
+# This adds customer location details to each sales record.
+
+sales_v6 = sales_v5.merge(
+    customers,
+    on="customer_id",
+    how="inner"
+)
+
+print("\nSales V6 Shape:", sales_v6.shape)
+print("\nSales V6 Columns:", sales_v6.columns.tolist())
+print("\nDuplicate Rows:", sales_v6.duplicated().sum())
+# Check null values in the final sales dataset
+# Count null values in each column2 & Show only columns that have null values
+
+print("\nSales V6 Null Values:")
+print(sales_v6.isnull().sum()[sales_v6.isnull().sum() > 0])
+
+#save final transformed sales datasheet
+sales_v6.to_csv("../output/fact_sales.csv",index=False)

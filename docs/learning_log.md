@@ -2,42 +2,46 @@
 
 ## read_csv()
 
-Purpose:
-Read a CSV file into a DataFrame.
-
-Example:
+Syntax:
 
 ```python
 pd.read_csv("file.csv")
 ```
 
+Explanation:
+
+- Reads a CSV file into a DataFrame.
+- Used to load datasets into Pandas.
+
 ---
 
 ## head()
 
-Purpose:
-Display first 5 rows.
-
-Example:
+Syntax:
 
 ```python
 df.head()
 ```
 
+Explanation:
+
+- Displays the first 5 rows.
+- Useful for quickly inspecting data.
+
 ---
 
 ## shape
 
-Purpose:
-Get number of rows and columns.
-
-Example:
+Syntax:
 
 ```python
 df.shape
 ```
 
-Output:
+Explanation:
+
+- Returns the number of rows and columns.
+- Output format:
 
 ```text
 (rows, columns)
@@ -47,126 +51,197 @@ Output:
 
 ## columns
 
-Purpose:
-Display column names.
-
-Example:
+Syntax:
 
 ```python
 df.columns
 ```
 
+Explanation:
+
+- Displays all column names.
+
 ---
 
 ## info()
 
-Purpose:
-Display dataset information.
-
-Shows:
-
-- Data types
-- Null values
-- Memory usage
-
-Example:
+Syntax:
 
 ```python
 df.info()
 ```
 
+Explanation:
+
+Displays:
+
+- Column names
+- Data types
+- Non-null counts
+- Memory usage
+
 ---
 
 ## describe()
 
-Purpose:
-Generate statistical summary.
-
-Example:
+Syntax:
 
 ```python
 df.describe()
 ```
 
-Learning:
+Explanation:
 
-- 25% = First Quartile
-- 50% = Median
-- 75% = Third Quartile
+Provides summary statistics for numeric columns.
+
+Shows:
+
+- Count
+- Mean
+- Standard Deviation
+- Minimum
+- Maximum
+- Quartiles
+
+---
+
+## isnull()
+
+Syntax:
+
+```python
+df.isnull()
+```
+
+Explanation:
+
+- Checks for missing values.
+- Returns True for null values.
 
 ---
 
 ## isnull().sum()
 
-Purpose:
-Count null values.
-
-Example:
+Syntax:
 
 ```python
 df.isnull().sum()
 ```
 
+Explanation:
+
+- Counts null values in each column.
+
+---
+
+## duplicated()
+
+Syntax:
+
+```python
+df.duplicated()
+```
+
+Explanation:
+
+- Checks for duplicate rows.
+- Returns True for duplicates.
+
 ---
 
 ## duplicated().sum()
 
-Purpose:
-Count duplicate records.
-
-Example:
+Syntax:
 
 ```python
 df.duplicated().sum()
 ```
 
+Explanation:
+
+- Counts duplicate rows.
+
 ---
 
 ## value_counts()
 
-Purpose:
-Count occurrences of unique values.
-
-Example:
+Syntax:
 
 ```python
-data["payment_type"].value_counts()
+df["column_name"].value_counts()
 ```
 
-Used For:
+Explanation:
 
-- Category analysis
-- Business distribution analysis
+- Counts occurrences of unique values.
+- Useful for category analysis.
 
 ---
 
 ## nunique()
 
-Purpose:
-Count unique values.
-
-Example:
+Syntax:
 
 ```python
-data["seller_id"].nunique()
+df["column_name"].nunique()
 ```
 
-Used For:
+Explanation:
 
-- Primary key validation
+- Counts unique values.
+- Useful for primary key validation.
+
+---
+
+## Selecting a Column
+
+Syntax:
+
+```python
+df["column_name"]
+```
+
+Explanation:
+
+- Selects a single column.
+
+---
+
+## Selecting Multiple Columns
+
+Syntax:
+
+```python
+df[
+    ["column1", "column2"]
+]
+```
+
+Explanation:
+
+- Selects multiple columns.
 
 ---
 
 ## Filtering Rows
 
-Purpose:
-Select rows that satisfy a condition.
+Syntax:
+
+```python
+df[
+    df["column_name"] == value
+]
+```
+
+Explanation:
+
+- Filters rows based on a condition.
 
 Example:
 
 ```python
-data[
-    data["order_status"] == "canceled"
+df[
+    df["order_status"] == "canceled"
 ]
 ```
 
@@ -174,56 +249,56 @@ data[
 
 ## Boolean Indexing
 
-Purpose:
-Filter data using True/False conditions.
-
-Example:
+Syntax:
 
 ```python
-data[
-    data["review_comment_message"].isnull()
-]
+df[condition]
 ```
+
+Explanation:
+
+- Returns rows where the condition is True.
 
 ---
 
 ## isin()
 
-Purpose:
-Check whether values exist in another column.
-
-Example:
+Syntax:
 
 ```python
-orders["order_id"].isin(
-    order_items["order_id"]
+df["column1"].isin(
+    df2["column2"]
 )
 ```
 
-Learning:
+Explanation:
 
-Used for relationship validation between datasets.
+- Checks whether values exist in another column.
+- Useful for relationship validation.
+
+Equivalent SQL:
+
+```sql
+IN
+```
 
 ---
 
-## ~ (NOT Operator)
+## NOT isin()
 
-Purpose:
-Reverse a condition.
-
-Example:
+Syntax:
 
 ```python
-~orders["order_id"].isin(
-    order_items["order_id"]
+~df["column1"].isin(
+    df2["column2"]
 )
 ```
 
-Learning:
+Explanation:
 
-Used to find missing records.
+- Returns values that do not exist in another column.
 
-Equivalent to SQL:
+Equivalent SQL:
 
 ```sql
 NOT IN
@@ -233,29 +308,34 @@ NOT IN
 
 ## merge()
 
-Purpose:
-Combine two datasets using a common key.
-
-Example:
+Syntax:
 
 ```python
-orders.merge(
-    order_items,
-    on="order_id",
+df1.merge(
+    df2,
+    on="column_name",
     how="inner"
 )
 ```
 
-Learning:
+Explanation:
 
-Similar to SQL JOIN.
+- Combines two DataFrames using a common column.
+- Similar to SQL JOIN.
 
 ---
 
-## merge() - on
+## on
 
-Purpose:
-Specify the common column used for joining.
+Syntax:
+
+```python
+on="column_name"
+```
+
+Explanation:
+
+- Specifies the common column used for joining.
 
 Example:
 
@@ -265,49 +345,105 @@ on="order_id"
 
 ---
 
-## merge() - how
+## Inner Join
 
-Purpose:
-Specify join type.
-
-Example:
+Syntax:
 
 ```python
-how="inner"
+df1.merge(
+    df2,
+    on="id",
+    how="inner"
+)
 ```
 
-Types:
+Explanation:
 
-```text
-inner
-left
-right
-outer
+- Keeps only matching records from both datasets.
+
+---
+
+## Left Join
+
+Syntax:
+
+```python
+df1.merge(
+    df2,
+    on="id",
+    how="left"
+)
 ```
+
+Explanation:
+
+- Keeps all records from the left dataset.
+- Missing matches become null values.
+
+---
+
+## Right Join
+
+Syntax:
+
+```python
+df1.merge(
+    df2,
+    on="id",
+    how="right"
+)
+```
+
+Explanation:
+
+- Keeps all records from the right dataset.
+- Missing matches become null values.
+
+---
+
+## Outer Join
+
+Syntax:
+
+```python
+df1.merge(
+    df2,
+    on="id",
+    how="outer"
+)
+```
+
+Explanation:
+
+- Keeps all records from both datasets.
+- Missing matches become null values.
 
 ---
 
 ## tolist()
 
-Purpose:
-Convert values to a Python list.
-
-Example:
+Syntax:
 
 ```python
 df.columns.tolist()
 ```
 
-Used For:
+Explanation:
 
-Displaying column names.
+- Converts values into a Python list.
 
 ---
 
-## Creating New Columns
+## Creating a New Column
 
-Purpose:
-Create derived business metrics.
+Syntax:
+
+```python
+df["new_column"] = (
+    df["column1"]
+    + df["column2"]
+)
+```
 
 Example:
 
@@ -318,91 +454,54 @@ sales_v2["total_item_value"] = (
 )
 ```
 
-Learning:
+Explanation:
 
-New columns can be created from existing columns.
+- Creates a derived column from existing columns.
 
 ---
 
 ## Relationship Validation
 
-Learning:
-
-Always validate relationships before merging datasets.
-
-Examples:
-
-```text
-Orders → Order Items
-
-Orders → Payments
-```
-
-Purpose:
-
-- Identify missing records
-- Understand join impact
-
----
-
-## One-to-Many Relationships
-
-Learning:
-
-One record can have multiple related records.
-
-Examples:
-
-```text
-One Order → Many Order Items
-
-One Order → Many Payments
-```
-
-Impact:
-
-- Row counts increase after merges.
-
----
-
-## Business Valid Nulls
-
-Learning:
-
-Not all null values indicate poor data quality.
-
-Examples:
-
-- Cancelled orders
-- Unavailable orders
-- Optional review comments
-
-Key Takeaway:
-
-Understand business context before cleaning data.
-
----
-
-## Derived Columns
-
-Learning:
-
-Transformations are not limited to joins.
-
-Example:
+Syntax:
 
 ```python
-total_item_value =price + freight_value
+df["column_name"].nunique()
 ```
 
-Used to create business metrics.
+Explanation:
+
+- Used to compare unique keys between datasets.
+- Helps identify missing relationships before merges.
 
 ---
 
-## Data Validation
+## Checking Columns With Null Values
 
-Purpose:
-Validate transformed data.
+Syntax:
+
+```python
+null_counts = df.isnull().sum()
+
+print(
+    null_counts[
+        null_counts > 0
+    ]
+)
+```
+
+Explanation:
+
+- Displays only columns that contain null values.
+
+---
+
+## describe() On Derived Columns
+
+Syntax:
+
+```python
+df["column_name"].describe()
+```
 
 Example:
 
@@ -410,17 +509,6 @@ Example:
 sales_v2["total_item_value"].describe()
 ```
 
-Checks:
+Explanation:
 
-- Min
-- Max
-- Average
-- Distribution
-
----
-
-## Fact Table
-
-Learning:
-
-Stores business transactions
+Used

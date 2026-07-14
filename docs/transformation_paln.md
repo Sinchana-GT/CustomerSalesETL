@@ -230,3 +230,18 @@ Geolocation:
 7. Load transformed tables into PostgreSQL.
 8. Create reporting queries.
 9. Build Power BI dashboard.
+
+Current Status
+
+✅ Orders + Order Items Merge
+✅ Payments Merge
+✅ Products Merge
+✅ Product Category Translation Merge
+✅ Sellers Merge
+✅ Customers Merge
+✅ Fact Sales Dataset Created
+
+Final Dataset:
+- Sales_V6
+- 117,601 Rows
+- 35 Columns
