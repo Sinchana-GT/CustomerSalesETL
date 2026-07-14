@@ -43,3 +43,25 @@ Reporting Layer
 ---------------
 SQL Queries
 Power BI Dashboards
+
+
+DataSet Relationship
+---------------------
+
+Customers
+    |
+customer_id
+    |
+Orders
+    |
+order_id
+    |
++-------------+
+|             |
+Payments   Order Items
+               |
+          +----+----+
+          |         |
+      Products   Sellers
+
+
