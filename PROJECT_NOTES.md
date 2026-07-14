@@ -225,3 +225,47 @@ Ready For:
 - Fact and Dimension Design
 - Data Cleaning Rules
 - PostgreSQL Loading Phase
+
+
+## Day 8 - Transformation Planning
+
+Tasks Completed:
+- Designed ETL target structure
+- Identified Fact and Dimension tables
+- Validated relationships between source datasets
+- Created transformation plan
+
+Fact Table:
+- fact_sales
+
+Dimension Tables:
+- dim_customer
+- dim_product
+- dim_seller
+- dim_date
+
+Relationship Validation:
+
+Orders:
+- 99,441 unique orders
+
+Order Items:
+- 98,666 unique orders
+
+Payments:
+- 99,440 unique orders
+
+Observations:
+- 775 orders do not exist in Order Items.
+- Most missing orders are unavailable or cancelled.
+- Only 1 order does not have a payment record.
+
+Key Learning:
+- Always validate relationships before performing joins.
+- INNER JOIN operations can remove records if matching keys are unavailable.
+
+Outcome:
+- Source-to-target mapping completed.
+- Ready to begin ETL transformations.
+
+

@@ -1,162 +1,426 @@
 # Learning Log
 
-## Pandas Concepts Learned
-
-### read_csv()
+## read_csv()
 
 Purpose:
-Reads CSV files into a DataFrame.
+Read a CSV file into a DataFrame.
 
 Example:
 
+```python
 pd.read_csv("file.csv")
+```
 
 ---
 
-### head()
+## head()
 
 Purpose:
-Returns first 5 rows.
+Display first 5 rows.
 
 Example:
 
+```python
 df.head()
+```
 
 ---
 
-### tail()
+## shape
 
 Purpose:
-Returns last 5 rows.
+Get number of rows and columns.
 
 Example:
 
-df.tail()
-
----
-
-### shape
-
-Purpose:
-Returns number of rows and columns.
-
-Example:
-
+```python
 df.shape
+```
 
 Output:
 
+```text
 (rows, columns)
+```
 
 ---
 
-### columns
+## columns
 
 Purpose:
-Returns column names.
+Display column names.
 
 Example:
 
+```python
 df.columns
+```
 
 ---
 
-### info()
+## info()
 
 Purpose:
-Displays:
-- Data Types
-- Null Counts
-- Memory Usage
+Display dataset information.
+
+Shows:
+
+- Data types
+- Null values
+- Memory usage
 
 Example:
 
+```python
 df.info()
+```
 
 ---
 
-### describe()
+## describe()
 
 Purpose:
-Generates statistical summary.
+Generate statistical summary.
 
 Example:
 
+```python
 df.describe()
-
----
-
-### isnull().sum()
-
-Purpose:
-Counts missing values.
-
-Example:
-
-df.isnull().sum()
-
----
-
-### duplicated().sum()
-
-Purpose:
-Counts duplicate rows.
-
-Example:
-
-df.duplicated().sum()
-
----
-
-### nunique()
-
-Purpose:
-Returns unique values count.
-
-Example:
-
-df.nunique()
-
-
-### value_counts()
-
-Used to understand business distribution.
-
-Example:
-
-data["payment_type"].value_counts()
+```
 
 Learning:
-- Helps identify dominant categories.
-- Useful for customer behavior analysis.
 
-### describe()
-
-Used for numerical analysis.
-
-Learning:
 - 25% = First Quartile
 - 50% = Median
 - 75% = Third Quartile
 
-### Business Profiling
+---
 
-A dataset can be technically clean and still require analysis.
+## isnull().sum()
+
+Purpose:
+Count null values.
+
+Example:
+
+```python
+df.isnull().sum()
+```
+
+---
+
+## duplicated().sum()
+
+Purpose:
+Count duplicate records.
+
+Example:
+
+```python
+df.duplicated().sum()
+```
+
+---
+
+## value_counts()
+
+Purpose:
+Count occurrences of unique values.
+
+Example:
+
+```python
+data["payment_type"].value_counts()
+```
+
+Used For:
+
+- Category analysis
+- Business distribution analysis
+
+---
+
+## nunique()
+
+Purpose:
+Count unique values.
+
+Example:
+
+```python
+data["seller_id"].nunique()
+```
+
+Used For:
+
+- Primary key validation
+
+---
+
+## Filtering Rows
+
+Purpose:
+Select rows that satisfy a condition.
+
+Example:
+
+```python
+data[
+    data["order_status"] == "canceled"
+]
+```
+
+---
+
+## Boolean Indexing
+
+Purpose:
+Filter data using True/False conditions.
+
+Example:
+
+```python
+data[
+    data["review_comment_message"].isnull()
+]
+```
+
+---
+
+## isin()
+
+Purpose:
+Check whether values exist in another column.
+
+Example:
+
+```python
+orders["order_id"].isin(
+    order_items["order_id"]
+)
+```
+
+Learning:
+
+Used for relationship validation between datasets.
+
+---
+
+## ~ (NOT Operator)
+
+Purpose:
+Reverse a condition.
+
+Example:
+
+```python
+~orders["order_id"].isin(
+    order_items["order_id"]
+)
+```
+
+Learning:
+
+Used to find missing records.
+
+Equivalent to SQL:
+
+```sql
+NOT IN
+```
+
+---
+
+## merge()
+
+Purpose:
+Combine two datasets using a common key.
+
+Example:
+
+```python
+orders.merge(
+    order_items,
+    on="order_id",
+    how="inner"
+)
+```
+
+Learning:
+
+Similar to SQL JOIN.
+
+---
+
+## merge() - on
+
+Purpose:
+Specify the common column used for joining.
+
+Example:
+
+```python
+on="order_id"
+```
+
+---
+
+## merge() - how
+
+Purpose:
+Specify join type.
+
+Example:
+
+```python
+how="inner"
+```
+
+Types:
+
+```text
+inner
+left
+right
+outer
+```
+
+---
+
+## tolist()
+
+Purpose:
+Convert values to a Python list.
+
+Example:
+
+```python
+df.columns.tolist()
+```
+
+Used For:
+
+Displaying column names.
+
+---
+
+## Creating New Columns
+
+Purpose:
+Create derived business metrics.
+
+Example:
+
+```python
+sales_v2["total_item_value"] = (
+    sales_v2["price"]
+    + sales_v2["freight_value"]
+)
+```
+
+Learning:
+
+New columns can be created from existing columns.
+
+---
+
+## Relationship Validation
+
+Learning:
+
+Always validate relationships before merging datasets.
 
 Examples:
-- Payment methods
-- Installment patterns
-- Transaction values
 
-Data profiling should answer:
-1. Is the data clean?
-2. What business patterns exist?
-3. Are there unusual values?
+```text
+Orders → Order Items
 
-### Primary Key Validation
+Orders → Payments
+```
 
-To validate whether a column can act as a primary key:
+Purpose:
 
-data["seller_id"].nunique()
-len(data)
-`
+- Identify missing records
+- Understand join impact
+
+---
+
+## One-to-Many Relationships
+
+Learning:
+
+One record can have multiple related records.
+
+Examples:
+
+```text
+One Order → Many Order Items
+
+One Order → Many Payments
+```
+
+Impact:
+
+- Row counts increase after merges.
+
+---
+
+## Business Valid Nulls
+
+Learning:
+
+Not all null values indicate poor data quality.
+
+Examples:
+
+- Cancelled orders
+- Unavailable orders
+- Optional review comments
+
+Key Takeaway:
+
+Understand business context before cleaning data.
+
+---
+
+## Derived Columns
+
+Learning:
+
+Transformations are not limited to joins.
+
+Example:
+
+```python
+total_item_value =price + freight_value
+```
+
+Used to create business metrics.
+
+---
+
+## Data Validation
+
+Purpose:
+Validate transformed data.
+
+Example:
+
+```python
+sales_v2["total_item_value"].describe()
+```
+
+Checks:
+
+- Min
+- Max
+- Average
+- Distribution
+
+---
+
+## Fact Table
+
+Learning:
+
+Stores business transactions

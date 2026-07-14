@@ -260,10 +260,44 @@ Null Values:
 Duplicate Records:
 - 0
 
-Review Data Analysis
------------------------
+Observations:
+- Dataset is clean.
+- No missing values detected.
+- No duplicate records detected.
+- Each row represents a product purchased within an order.
+ 
+Relationships:
+- order_id → Orders Dataset
+- product_id → Products Dataset
+- seller_id → Sellers Dataset
+ 
+Overall Conclusion:
+- Dataset is clean from a data quality perspective.
+- No cleaning required at this stage.
+ 
+ETL Decision:
+- No action required.
 
-Review Distribution:
+================================================================================
+DATASET: REVIEWS
+================================================================================
+
+Purpose:
+- One row represents one customer review for an order.
+
+Shape:
+- Rows: 99,224
+- Columns: 7
+
+Null Values:
+
+- review_comment_title: 87,656
+- review_comment_message: 58,247
+
+Duplicate Records:
+- 0
+
+Review Score Distribution:
 
 - 1 Star: 11,424
 - 2 Stars: 3,151
@@ -274,7 +308,6 @@ Review Distribution:
 Observations:
 - 5-star reviews account for the majority of ratings.
 - Customer satisfaction appears to be generally high.
-- Low-rated reviews represent a smaller proportion of total reviews.
 
 Review Statistics:
 
@@ -282,11 +315,6 @@ Review Statistics:
 - Median Rating: 5
 - Minimum Rating: 1
 - Maximum Rating: 5
-
-Observations:
-- The average rating is above 4.
-- Half of all reviews have a rating of 5.
-- Ratings are skewed toward positive feedback.
 
 Review Comment Analysis:
 
@@ -302,12 +330,15 @@ Observations:
 - Many customers submit ratings without written comments.
 - Missing comments are a valid business scenario.
 - Customers are more likely to leave only a rating when satisfied.
-- Comment fields appear optional.
 
-Conclusion:
+Overall Conclusion:
 - The Reviews dataset is healthy.
 - Null review comments should be retained.
-- Review scores provide valuable customer satisfaction insights.
+
+ETL Decision:
+- Keep null review titles.
+- Keep null review messages.
+- No cleaning required.
 
 ================================================================================
 DATASET: PRODUCTS
@@ -349,12 +380,15 @@ Dimension Missing Products:
 - One product is missing both metadata and dimensional information.
 
 Observations:
-- Missing values are concentrated in specific products.
-- Data quality issue appears to be product-specific rather than dataset-wide.
+- Missing values are concentrated in a small subset of products.
+- 610 products are missing metadata attributes.
+- Only 2 products are missing dimensional attributes.
+- Data quality issues appear to be product-specific rather than dataset-wide.
 
 ETL Decision:
-- Do not remove records.
-- Further investigation required during transformation phase.
+- Do not remove records at this stage.
+- Preserve products with missing metadata.
+- Investigate handling of missing product attributes during transformation.
 
 ================================================================================
 DATASET: SELLERS
@@ -430,3 +464,47 @@ Relationship:
 ETL Decision:
 - No cleaning required.
 - Use during transformation to translate category names to English.
+
+
+================================================================================
+RELATIONSHIP VALIDATION
+================================================================================
+
+Orders vs Order Items
+
+Orders:
+- 99,441 unique order_id
+
+Order Items:
+- 98,666 unique order_id
+
+Missing Orders:
+- 775
+
+Status Distribution:
+- unavailable: 603
+- canceled: 164
+- created: 5
+- invoiced: 2
+- shipped: 1
+
+Observation:
+- Missing order items are primarily associated with unavailable and cancelled orders.
+- Business scenario appears valid.
+
+---
+
+Orders vs Payments
+
+Orders:
+- 99,441 unique order_id
+
+Payments:
+- 99,440 unique order_id
+
+Missing Orders:
+- 1
+
+Observation:
+- Data quality is excellent.
+- Only one order lacks a payment record.
