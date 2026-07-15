@@ -549,3 +549,14 @@ from sqlalchemy import create_engine
 engine = create_engine(
     "database_connection_string"
 )
+
+
+## create_engine()
+
+Syntax:
+
+```python
+engine = create_engine(
+    "database_connection_string"
+)
+
