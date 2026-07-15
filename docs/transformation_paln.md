@@ -231,7 +231,7 @@ Geolocation:
 8. Create reporting queries.
 9. Build Power BI dashboard.
 
-Current Status
+## Current Status
 
 ✅ Orders + Order Items Merge
 ✅ Payments Merge
@@ -240,8 +240,15 @@ Current Status
 ✅ Sellers Merge
 ✅ Customers Merge
 ✅ Fact Sales Dataset Created
+✅ fact_sales.csv Exported
+✅ PostgreSQL Load Completed
 
 Final Dataset:
-- Sales_V6
-- 117,601 Rows
-- 35 Columns
+
+fact_sales
+
+Rows:
+- 117,601
+
+Columns:
+- 35

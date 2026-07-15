@@ -508,7 +508,44 @@ Example:
 ```python
 sales_v2["total_item_value"].describe()
 ```
+## to_sql()
 
+Syntax:
+
+```python
+dataframe.to_sql(
+    "table_name",
+    engine,
+    if_exists="replace",
+    index=False
+)
 Explanation:
 
-Used
+Loads a Pandas DataFrame into a database table.
+Creates the table automatically if it does not exist.
+
+Parameters:
+table_name:
+
+Name of the database table.
+
+engine:
+
+Database connection object.
+
+if_exists="replace":
+
+Replaces the table if it already exists.
+
+index=False:
+
+Prevents creation of an extra index column.
+
+
+## create engine
+
+from sqlalchemy import create_engine
+
+engine = create_engine(
+    "database_connection_string"
+)

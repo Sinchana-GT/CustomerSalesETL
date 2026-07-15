@@ -112,16 +112,14 @@ sales_v5
     +
 customers
     ↓
+Sales_V6
+
 sales_v6 (fact_sales)
-
-## Final Fact Table
-
+    ↓
+fact_sales.csv
+    ↓
+Neon PostgreSQL
+    ↓
 fact_sales
-
-Rows:
-- 117,601
-
-Columns:
-- 35
 
 
