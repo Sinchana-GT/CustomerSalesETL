@@ -93,10 +93,19 @@ kpi_summary = pd.DataFrame(kpi_data)
 print("\nKPI Summary:")
 print(kpi_summary)
 
-# Export CSV
-kpi_summary.to_csv(
-    "../output/kpi_summary.csv",
+# Convert KPI rows to columns
+kpi_report = pd.DataFrame([{
+    row["kpi_name"]: row["kpi_value"]
+    for _, row in kpi_summary.iterrows()
+}])
+
+print(kpi_report)
+
+kpi_report.to_csv(
+    "../output/kpi_report.csv",
     index=False
 )
+
+
 
 print("\nKPI summary exported successfully.")
