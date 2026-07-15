@@ -123,3 +123,21 @@ Neon PostgreSQL
 fact_sales
 
 
+## Final Architecture
+
+Source CSV Files
+        ↓
+Data Profiling
+        ↓
+Transformations
+        ↓
+fact_sales.csv
+        ↓
+Neon PostgreSQL
+        ↓
+SQL Analysis
+        ↓
+KPI Summary
+        ↓
+Power BI Dashboard
+
