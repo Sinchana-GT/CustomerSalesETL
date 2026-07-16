@@ -112,15 +112,25 @@ sales_v5
     +
 customers
     ↓
-Sales_V6
+Sales_V6 -> fact_sales.csv
 
-sales_v6 (fact_sales)
+Sales_V6
     ↓
-fact_sales.csv
+Star Schema
+
+fact_sales_star
+dim_customer
+dim_product
+dim_seller
     ↓
 Neon PostgreSQL
     ↓
-fact_sales
+SQL Analysis
+    ↓
+KPI Reporting
+    ↓
+Power BI Dashboard
+    
 
 
 ## Final Architecture
@@ -140,4 +150,7 @@ SQL Analysis
 KPI Summary
         ↓
 Power BI Dashboard
+
+
+
 

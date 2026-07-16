@@ -218,3 +218,25 @@ Outputs Created:
 Outcome:
 
 Business KPIs successfully generated from PostgreSQL and exported for reporting.
+
+
+## Star Schema Implementation
+
+Created:
+
+- fact_sales_star.csv
+- dim_customer.csv
+- dim_product.csv
+- dim_seller.csv
+
+Validation:
+
+- Customer Dimension: 98,665 records
+- Product Dimension: 32,951 records
+- Seller Dimension: 3,095 records
+- Fact Table: 117,601 records
+- Duplicate Fact Rows: 0
+
+Outcome:
+
+Implemented a star schema data model to support reporting and dashboard development.
